@@ -1,0 +1,6 @@
+@SurvayBasket2026_HostAddress = http://localhost:5063
+
+GET {{SurvayBasket2026_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
