@@ -1,1 +1,2 @@
-# SurvayBasket2026
+# SurvayBasket
+A comprehensive and secure platform for creating, managing, and distributing surveys. This project features secure login and sign-up functionalities, allowing users to create and manage surveys effectively. Key features include defining survey titles, setting specific durations, and tracking survey status. The platform ensures secure communication and data management.A comprehensive and secure platform for creating, managing, and distributing surveys. This project features secure login and sign-up functionalities, allowing users to create and manage surveys effectively. Key features include defining survey titles, setting specific durations, and tracking survey status. The platform ensures secure communication and data management.
