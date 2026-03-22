@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SurvayBasket2026.Context;
 
@@ -11,9 +12,11 @@ using SurvayBasket2026.Context;
 namespace SurvayBasket2026.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260310170153_addingAnswer-question")]
+    partial class addingAnswerquestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -352,63 +355,6 @@ namespace SurvayBasket2026.Context.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("SurvayBasket2026.Entities.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PollId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SubmittedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("PollId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("Votes");
-                });
-
-            modelBuilder.Entity("SurvayBasket2026.Entities.VoteAnswer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VoteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnswerId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("VoteId", "QuestionId")
-                        .IsUnique();
-
-                    b.ToTable("VoteAnswers");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -550,67 +496,14 @@ namespace SurvayBasket2026.Context.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
-            modelBuilder.Entity("SurvayBasket2026.Entities.Vote", b =>
-                {
-                    b.HasOne("SurvayBasket2026.Entities.Poll", "poll")
-                        .WithMany("votes")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SurvayBasket2026.Entities.ApplicationUser", "user")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("poll");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("SurvayBasket2026.Entities.VoteAnswer", b =>
-                {
-                    b.HasOne("SurvayBasket2026.Entities.Answer", "answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SurvayBasket2026.Entities.Question", "question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SurvayBasket2026.Entities.Vote", "Vote")
-                        .WithMany("voteAnswers")
-                        .HasForeignKey("VoteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Vote");
-
-                    b.Navigation("answer");
-
-                    b.Navigation("question");
-                });
-
             modelBuilder.Entity("SurvayBasket2026.Entities.Poll", b =>
                 {
                     b.Navigation("Questions");
-
-                    b.Navigation("votes");
                 });
 
             modelBuilder.Entity("SurvayBasket2026.Entities.Question", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("SurvayBasket2026.Entities.Vote", b =>
-                {
-                    b.Navigation("voteAnswers");
                 });
 #pragma warning restore 612, 618
         }

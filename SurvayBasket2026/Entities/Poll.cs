@@ -11,6 +11,7 @@ namespace SurvayBasket2026.Entities
         public DateOnly StartedAt { get; set; }
         public DateOnly EndAt { get; set; }
 
-
+        public ICollection<Question> Questions { get; set; } = [];
+        public ICollection<Vote> votes { get; set; } = [];
     }
 }

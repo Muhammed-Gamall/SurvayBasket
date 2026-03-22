@@ -10,16 +10,20 @@ namespace SurvayBasket2026.Services
 
         public async Task<IEnumerable<PollResponse>> GetAllPollsAsync(CancellationToken cancellationToken)
         {
-          var polls = await _context.Polls.AsNoTracking().ToListAsync(cancellationToken);
-            var response = polls.Adapt<IEnumerable<PollResponse>>();
-            return response;
+          var polls = await _context.Polls.AsNoTracking()
+                .ProjectToType<PollResponse>()
+                .ToListAsync(cancellationToken);
+            //var response = polls.Adapt<IEnumerable<PollResponse>>();
+            return polls;
         }
 
         public async Task<PollResponse?> GetPollByIdAsync(int id, CancellationToken cancellationToken)
         {
-            var polls = _context.Polls.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            var response =  polls.Adapt<PollResponse>();
-            return response;
+            var polls = _context.Polls.AsNoTracking()
+                .ProjectToType<PollResponse>()
+                .FirstOrDefault(x => x.Id == id);
+            //var response =  polls.Adapt<PollResponse>();
+            return polls;
         }
 
         public async Task<PollResponse> CreatePollAsync(PollRequest request, CancellationToken cancellationToken)

@@ -8,11 +8,25 @@ namespace SurvayBasket2026.Context
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
+        public DbSet<Answer> Answers { get; set; }
         public DbSet<Poll>Polls { get; set; }
-          
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<VoteAnswer> VoteAnswers { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+           var CascadeFKs= modelBuilder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys())
+                .Where(fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
+
+            foreach (var fk in CascadeFKs)
+               fk.DeleteBehavior = DeleteBehavior.Restrict;
+           
+
             base.OnModelCreating(modelBuilder);
         }
 

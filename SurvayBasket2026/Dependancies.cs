@@ -1,7 +1,9 @@
 ﻿
 
+using MapsterMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SurvayBasket2026.Services.Question;
 using System.Text;
 
 namespace SurvayBasket2026
@@ -10,6 +12,7 @@ namespace SurvayBasket2026
     {
         public static IServiceCollection AddDependancies(this IServiceCollection services, IConfiguration configuration)
         {
+           services.AddMappingConfig();
            services.AddControllers();
            services.AddOpenApi();
             services.AddDbContext(configuration);
@@ -19,7 +22,16 @@ namespace SurvayBasket2026
 
             services.AddScoped<IPollService, PollService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IQuestionService, QuestionService>();
 
+            return services;
+        }
+
+        private static IServiceCollection AddMappingConfig(this IServiceCollection services)
+        {
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(Assembly.GetExecutingAssembly());
+            services.AddSingleton<IMapper>(new Mapper(config));
             return services;
         }
         private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
